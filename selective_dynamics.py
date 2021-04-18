@@ -1,5 +1,5 @@
 ### Command:
-# python selective_dynamics.py [filename]
+# python selective_dynamics.py [input_filename] [output_filename:optional]
 # 
 import sys
 
