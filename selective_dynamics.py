@@ -54,7 +54,10 @@ else:
 ##############################################################################
 ########## Write output POSCAR file
 ##############################################################################
-out_filename='SelDy'+'_'+SD_tag+'_'+"_".join('%s' % entry for entry in apply_atom_list)+'.vasp'
+if len(sys.argv) >= 3:
+    out_filename=sys.argv[2]
+else:
+    out_filename='SelDy'+'_'+SD_tag+'_'+"_".join('%s' % entry for entry in apply_atom_list)+'.vasp'
 out_file=open(out_filename,'w')
 
 # Write header + lattice part
@@ -85,6 +88,7 @@ for i in range(8+flag_selective,max(index_dict.values())):
     out_file.write('\n') # end of line
 # end of file
 out_file.close()
+
 
 print("Following POSCAR is written: {0}".format(out_filename))
 
