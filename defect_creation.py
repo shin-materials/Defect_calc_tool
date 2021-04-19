@@ -1,9 +1,11 @@
 ### Command:
 # python selective_dynamics.py [input_filename] [output_filename:optional]
-# input_filename: POSCAR file that the user want to modify the selective dynamics
-# output_filename: (optional) modified POSCAR file. If not given, default naming will be applied
-
+# 
 import sys
+import numpy as np
+
+### temporary_line
+sys.argv=[None,'CONTCAR']
 
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
@@ -41,6 +43,8 @@ for i, element in enumerate(element_list):
 print('Which tag do you want to apply for selective dynamics?')
 print('ex) TTT, FFF, FFT')
 SD_tag=input()
+defect_input=input()
+
 print('For which atoms do you want to apply this tag?')
 print("Separate with spaces: ex) 'Si1 Si2 O1 O3'")
 print("For all atoms, write 'All' ")
@@ -52,6 +56,13 @@ if atom_input == 'All':
 else:
     apply_atom_list=atom_input.split()
     apply_index_list=[index_dict[i] for i in apply_atom_list]
+
+
+
+
+
+
+
 
 ##############################################################################
 ########## Write output POSCAR file

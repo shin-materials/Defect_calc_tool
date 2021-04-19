@@ -85,7 +85,7 @@ struct = Structure.from_file(sys.argv[1])
 df=create_df(struct)
 
 print("   Atom label |     x       y       z    | Bond length ")
-print("   ───────────┼──────────────────────────|─────────────")
+print("   ───────────┼──────────────────────────┼─────────────")
 # list of (3,) numpy arrays
 coordinate_list=[]
 for atom_label in atom_list:

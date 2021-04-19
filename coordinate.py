@@ -65,14 +65,14 @@ if len(atom_list)==0:
 ########## Printing
 ##############################################################################
 
-print("Atom label |    x       y       z   ")
-print("───────────┼────────────────────────")
+print("   Atom label |     x       y       z   ")
+print("   ───────────┼─────────────────────────")
 # list of (3,) numpy arrays
 coordinate_list=[]
 for atom_label in atom_list:
     temp_list = lines[index_dict[atom_label]].split()
     coordinate_list.append(np.array([float(i) for i in temp_list]))
     temp_array=np.array([float(i) for i in temp_list])
-    print("{0:>10} | {1:6.4f}  {2:6.4f}  {3:6.4f}".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+    print("   {0:>10} |  {1:6.4f}  {2:6.4f}  {3:6.4f}".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
 
 
