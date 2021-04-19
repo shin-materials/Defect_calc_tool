@@ -1,9 +1,13 @@
-### Command:
-# python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get coordinates]
-# input_filename: POSCAR file that the user want to get coordinates
-# atoms: follows VESTA-like labels. Separated by spaces
-# ex) Si1 Si2 Si47 O28
+"""
+## Command:
+python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get coordinates]
 
+[POSCAR_filename]:
+    POSCAR file that the user want to get coordinates
+[optional:atom labels to get coordinates]:
+    follows VESTA-like labels. Separated by spaces
+    ex) Si1 Si2 Si47 O28
+"""
 import sys
 import numpy as np
 

@@ -1,6 +1,8 @@
-### Command:
-# python selective_dynamics.py [input_filename] [output_filename:optional]
-# 
+"""
+## Command:
+python selective_dynamics.py [input_filename] [output_filename:optional]
+
+"""
 import sys
 import numpy as np
 

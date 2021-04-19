@@ -1,10 +1,16 @@
-### Command:
-# python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get neighbors] [optional:radius of search]
-# input_filename: POSCAR file that the user want to get coordinates
-# atoms: follows VESTA-like labels. Separated by spaces
-# ex) Si1 Si2 Si47 O28
-# radius of search: provide liek 'r=2.5'. Default is 2.5 ang.
-# 
+"""
+## Command:
+python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get neighbors] [optional:radius of search]
+
+[POSCAR_filename]:
+    POSCAR file that the user want to get coordinates
+[optional:atom labels to get neighbors]:
+    follows VESTA-like labels. Separated by spaces
+    ex) Si1 Si2 Si47 O28
+[optional:radius of search]:
+    ex) r=2.5 
+    Default is 2.5 ang.
+"""
 
 import sys
 import numpy as np
