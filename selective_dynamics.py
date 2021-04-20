@@ -38,13 +38,14 @@ for i, element in enumerate(element_list):
 ##############################################################################
 ########## Ask user for tag and atoms to apply
 ##############################################################################
-print('Which tag do you want to apply for selective dynamics?')
-print('ex) TTT, FFF, FFT')
-SD_tag=input()
 print('For which atoms do you want to apply this tag?')
 print("Separate with spaces: ex) 'Si1 Si2 O1 O3'")
 print("For all atoms, write 'All' ")
 atom_input=input()
+
+print('Which tag do you want to apply for selective dynamics?')
+print('ex) TTT, FFF, FFT')
+SD_tag=input()
 
 if atom_input == 'All':
     apply_atom_list = [atom_input]
@@ -65,13 +66,16 @@ out_file=open(out_filename,'w')
 # Write header + lattice part
 # Header is up to 7th line if 'selective dynamics' is not stated
 # up to 8th if 'selective dynamics' is already stated
-for i in range(0,8+flag_selective):
+for i in range(0,7+flag_selective):
     out_file.write(lines[i])
 
 # state 'selective dynamics' if not already stated
 if flag_selective == 0:
     out_file.write("Selective dynamics \n")
-    
+
+# Write Direct or Cartesian
+out_file.write(lines[7+flag_selective])
+
 for i in range(8+flag_selective,max(index_dict.values())):
     for j in (lines[i].split())[0:3]:
             out_file.write('  '+j)
