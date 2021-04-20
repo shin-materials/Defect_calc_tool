@@ -11,7 +11,6 @@ python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get coor
 import sys
 import numpy as np
 
-
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
 ##############################################################################
@@ -75,8 +74,8 @@ print("   ───────────┼───────────�
 coordinate_list=[]
 for atom_label in atom_list:
     temp_list = lines[index_dict[atom_label]].split()
-    coordinate_list.append(np.array([float(i) for i in temp_list]))
-    temp_array=np.array([float(i) for i in temp_list])
-    print("   {0:>10} |  {1:6.4f}  {2:6.4f}  {3:6.4f}".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+    #coordinate_list.append(np.array([float(i) for i in temp_list]))
+    temp_array=np.array([float(i) for i in temp_list[0:3]])
+    print("   {0:>10} | {1: 5.4f} {2: 5.4f} {3: 5.4f} ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
 
 

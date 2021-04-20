@@ -128,9 +128,9 @@ remain=len(filename1)%namespace
 for i in range(Q):
     print('              |              | {0:<24s} | {1:<24s} |'
           .format(filename1[i*namespace:(i+1)*namespace],filename2[i*namespace:(i+1)*namespace]))
-print('              | Thres.={0:.2f}  | {1:<24s} | {2:<24s} |'
+print('              | Thres.= {0:.2f} | {1:<24s} | {2:<24s} |'
           .format(threshold,filename1[Q*namespace:],filename2[Q*namespace:]))
-print("   Atom label | Displacement |     x       y       z    |     x       y       z    |")
+print("   Atom label | Displ. (Ang) |     x       y       z    |     x       y       z    |")
 print("   ───────────┼──────────────┼──────────────────────────┼──────────────────────────┤")
 
 
@@ -143,5 +143,5 @@ for atom_label in list(df['atom_label']):
     coord1=A1_st1.frac_coords
     coord2=A1_st2.frac_coords
     print("        {0:>5} |  {1:8.4f}    ".format(atom_label,disp) +
-          "|  {0:6.4f}  {1:6.4f}  {2:6.4f}  ".format(coord1[0],coord1[1],coord1[2]) + 
-          "|  {0:6.4f}  {1:6.4f}  {2:6.4f}  |".format(coord2[0],coord2[1],coord2[2]))
+          "| {0: 5.4f} {1: 5.4f} {2: 5.4f}  ".format(coord1[0],coord1[1],coord1[2]) + 
+          "| {0: 5.4f} {1: 5.4f} {2: 5.4f}  |".format(coord2[0],coord2[1],coord2[2]))

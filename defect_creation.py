@@ -7,7 +7,7 @@ import sys
 import numpy as np
 
 ### temporary_line
-sys.argv=[None,'CONTCAR']
+sys.argv=[None,'SelDy_TTT_All.vasp']
 
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label

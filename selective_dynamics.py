@@ -4,6 +4,7 @@
 # output_filename: (optional) modified POSCAR file. If not given, default naming will be applied
 
 import sys
+import numpy as np
 
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
@@ -96,5 +97,30 @@ for i in range(8+flag_selective,max(index_dict.values())):
 out_file.close()
 
 
-print("Following POSCAR is written: {0}".format(out_filename))
+##############################################################################
+########## Printing
+##############################################################################
+
+if atom_input != 'All':
+    print("")
+    print("   Modified atom list")
+    print("   Atom label |     x       y       z   | tag ")
+    print("   ───────────┼─────────────────────────┼─────")
+    # list of (3,) numpy arrays
+    coordinate_list=[]
+    for atom_label in apply_atom_list:
+        temp_list = lines[index_dict[atom_label]].split()
+        coordinate_list.append(np.array([float(i) for i in temp_list[0:3]]))
+        temp_array=np.array([float(i) for i in temp_list[0:3]])
+        print("   {0:>10} | {1: 5.4f} {2: 5.4f} {3: 5.4f} "
+              .format(atom_label,temp_array[0],temp_array[1],temp_array[2])+
+              "| {0}".format(SD_tag))
+else:
+    print("")
+    print("   All atoms selective dynamics tag is set to {0}".format(SD_tag))
+
+  
+print("")  
+print("POSCAR is written with this filename: {0}".format(out_filename))
+
 
