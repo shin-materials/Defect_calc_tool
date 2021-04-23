@@ -14,10 +14,12 @@ python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get neig
 
 import sys
 import numpy as np
-from pymatgen.core import Structure
+from pymatgen.core import Structure, Element
 import pandas as pd
+#from pymatgen.util.coord import pbc_shortest_vectors
 
-sys.argv=['test','CONTCAR','Si1','r=2']
+#sys.argv=['test','CONTCAR','0.1,0.1,0.1','r=3.5']
+sys.argv=['test','CONTCAR','Si1','r=3.5']
 #print(sys.argv[0])
 
 radius=None
@@ -27,7 +29,7 @@ for i in range(len(sys.argv)):
         # Once parsed, remove from the sys.argv
         sys.argv.remove(sys.argv[i])
 if radius == None:
-    radius=2.5
+    radius=3.5
 
 def create_df(pmg_struct):
 	"""
@@ -70,8 +72,7 @@ if len(sys.argv) == 1:
 
 # If atoms are not states in the command lines
 if len(sys.argv) == 2:
-    print('Of which atoms do you want to get neighbors?')
-    print("Separate with spaces: ex) 'Si1 Si2 O1 O3'")
+    print('Of which single atom do you want to perturb the position of neighbors?')
     atom_input=input()
     entry_list=atom_input.split()
 
@@ -104,13 +105,14 @@ if len(atom_list)==0:
 
 struct = Structure.from_file(sys.argv[1])
 
-SG = struct.get_space_group_info()[0]
+original_SG = struct.get_space_group_info()[0]
 df=create_df(struct)
 
 lattice_vector = np.array([struct.lattice.a,struct.lattice.b,struct.lattice.c])
 
 print("   Atom label |     x       y       z    | Distance ")
 print("   ───────────┼──────────────────────────┼──────────")
+print("    Before    | Space group: {0:<8}    |".format(original_SG))
 # list of (3,) numpy arrays
 coordinate_list=[]
 for atom_label in atom_list:
@@ -127,7 +129,7 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └{0:>5} | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+            print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
     # If entry is coordinate
@@ -142,24 +144,99 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └{0:>5} | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+            print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A2_tuple[1] ))
+            
 
+print_list=[]
+# If label is atom label like 'Si1'
+if atom_list[0][0].isalpha():
+    A1_label=atom_list[0]
+    A1=df[df['atom_label']=='Si1']['pmg_site'].iloc[0]
+    neighbors=struct.get_neighbors(A1,r=radius)
+    for A2 in neighbors:
+        A2.to_unit_cell(in_place=True)
+        A2_label=df[df['pmg_site']==A2]['atom_label'].iloc[0]
+        # random numbers
+        random_vector=np.random.ranf([3,])-0.5
+        # coordination dimention is (,3)
+        random_vector=0.1/A1.distance(A2)*random_vector/np.linalg.norm(random_vector)
+        # perturbation: diaplace by 0.1 \AA for atoms 1.0 \AA apart from the position
+        A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
+        temp_array=A2.frac_coords
+        print_list.append("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+                      .format(A2_label,
+                              temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
+        # print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+        #               .format(A2_label,
+        #                       temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
+# If entry is coordinate
+else:        
+    position_array=np.array(eval(atom_label))
+    print("     coords   | {0: 5.4f} {1: 5.4f} {2: 5.4f}  |  ------ ".format(position_array[0],position_array[1],position_array[2]))
+    neighbors=struct.get_sites_in_sphere(position_array,r=radius)
+    for i, A2_tuple in enumerate(neighbors):
+        A2=A2_tuple[0]
+        A2.to_unit_cell(in_place=True)
+        A2_label=df[df['pmg_site']==A2]['atom_label'].iloc[0]
+        random_vector=np.random.ranf([3,])-0.5
+        # coordination dimention is (,3)
+        random_vector=0.1/A2.distance_from_point(position_array*lattice_vector)*random_vector/np.linalg.norm(random_vector)
+        A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
+        temp_array=A2.frac_coords
+        new_distance = (struct.get_sites_in_sphere(position_array,r=radius))[i][1]
+        print_list.append("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+              .format(A2_label, temp_array[0], temp_array[1], temp_array[2],
+                      new_distance))
+        # print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+        #       .format(A2_label, temp_array[0], temp_array[1], temp_array[2],
+        #               new_distance))
+        
 
+new_SG = struct.get_space_group_info()[0]
+print("   ───────────┼──────────────────────────┼──────────")
+print("    After     | Space group: {0:<8}    |".format(new_SG))
+A1=df[df['atom_label']==atom_label]['pmg_site'].iloc[0]
+temp_array=A1.frac_coords
+print("   {0:>5}      | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  ------ ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+for i in print_list:
+    print(i)
+    
+##############################################################################
+########## Write POSCAR
+##############################################################################  
+# update DataFrame
+label_df=create_df(struct)
 
-A1=df[df['atom_label']=='Si1']['pmg_site'].iloc[0]
-neighbors=struct.get_neighbors(A1,r=radius)
-for A2 in neighbors:
-    A2.to_unit_cell(in_place=True)
-    A2_label=df[df['pmg_site']==A2]['atom_label'].iloc[0]
-    random_vector=np.random.ranf([1,3])-0.5
-    random_vector=0.15/A1.distance(A2)*random_vector[0]/np.linalg.norm(random_vector)
-    A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
-    temp_array=A2.frac_coords
-    print("       └{0:>5} | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
-                  .format(A2_label,
-                          temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
-    
-    
-    
+# Idenfity lattice vectors
+lattice = struct.lattice.matrix
+# Get element of each atoms
+species_list=struct.species
+# Remove repeated entry in the element list
+reduced_species=[str(i) for n, i in enumerate(species_list) if i not in species_list[:n]]
+
+filename = 'PERTURBED_'+sys.argv[1]
+out_file=open(filename,'w')
+out_file.write("Perturbed POSCAR file from {0}\n".format(sys.argv[1])) #first comment line
+out_file.write("1.0\n") # scale 
+# Print lattice part
+for i in range(np.shape(lattice)[0]):
+    out_file.write("{0:20.10f} {1:20.10f} {2:20.10f}\n".format(lattice[i,0],lattice[i,1],lattice[i,2]))
+# Print elements
+out_file.write("  "+" ".join('%4s' % entry for entry in reduced_species))
+out_file.write("\n")
+# Print the number of atoms for each element
+num_each_element=[species_list.count(Element(i)) for i in reduced_species]
+out_file.write("  "+" ".join('%4d' % entry for entry in num_each_element))
+out_file.write("\n")
+
+out_file.write("Direct\n")
+for element in reduced_species:
+    site_list=label_df[label_df['element']==element]['pmg_site']
+    for site in site_list:
+        out_file.write("  "+"        ".join('%.10f' % entry for entry in site.frac_coords)+'\n')
+out_file.close()
+
+print("")
+print('  Perturbed structure was written as {0}'.format(filename))

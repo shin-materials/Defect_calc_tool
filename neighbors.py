@@ -127,7 +127,7 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └ {0:<5}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
+            print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
     # If entry is coordinate
@@ -142,6 +142,6 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └ {0:<5}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
+            print("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A2_tuple[1] ))
