@@ -7,6 +7,8 @@ python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get neig
 [optional:atom labels to get neighbors]:
     follows VESTA-like labels. Separated by spaces
     ex) Si1 Si2 Si47 O28
+    ** coordinates can also be input
+    All of [0.1,0.1,0.1], (0.2,0.1,0.3), 0.1,0.2,0.3 format work
 [optional:radius of search]:
     ex) r=2.5 
     Default is 2.5 ang.
