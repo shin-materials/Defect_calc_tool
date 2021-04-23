@@ -18,8 +18,9 @@ import sys
 import numpy as np
 from pymatgen.core import Structure
 import pandas as pd
+import re
 
-# sys.argv=['test','CONTCAR','[0.1,0.1,0.1]','Si1','Si2','O1','r=2']
+sys.argv=['test','CONTCAR','[0.1,0.1,0.1]','Si1','Si2','O1','r=2']
 # sys.argv=['test','CONTCAR','Si1','0.2,0.1,', '0.1','Si1','Si2','O1','r=2']
 #print(sys.argv[0])
 
@@ -92,11 +93,11 @@ for i,entry in enumerate(entry_list):
     else: 
         atom_list[-1]=atom_list[-1]+entry
     
-    if ',' in entry:
+    if ',' in entry[-1]:
         flag_add_to_last=1
     else:
         flag_add_to_last=0
-
+    
 if len(atom_list)==0:
     print('No atom labels are provided')
     sys.exit()
@@ -109,7 +110,7 @@ struct = Structure.from_file(sys.argv[1])
 df=create_df(struct)
 
 print("   Atom label |     x       y       z    | Distance ")
-print("   ───────────┼──────────────────────────┼──────────")
+print("  ────────────┼──────────────────────────┼──────────")
 # list of (3,) numpy arrays
 coordinate_list=[]
 for atom_label in atom_list:
@@ -117,7 +118,7 @@ for atom_label in atom_list:
     if atom_label[0].isalpha():
         A1=df[df['atom_label']==atom_label]['pmg_site'].iloc[0]
         temp_array=A1.frac_coords
-        print("   {0:>5}      | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  ------ ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+        print("   {0:>5}      | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  ----- ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
         neighbors=struct.get_neighbors(A1,r=radius)
         
         for A2 in neighbors:
@@ -126,13 +127,13 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └{0:>5} | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+            print("       └ {0:<5}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
     # If entry is coordinate
     else:
         array=np.array(eval(atom_label))
-        print("     coords   | {0: 5.4f} {1: 5.4f} {2: 5.4f}  |  ------ ".format(array[0],array[1],array[2]))
+        print("     coords   | {0: 5.4f} {1: 5.4f} {2: 5.4f}  |  ----- ".format(array[0],array[1],array[2]))
         neighbors=struct.get_sites_in_sphere(array,r=radius)
         for A2_tuple in neighbors:
             A2=A2_tuple[0]
@@ -141,6 +142,6 @@ for atom_label in atom_list:
             # temp_list = lines[index_dict[atom_label]].split()
             # coordinate_list.append(np.array([float(i) for i in temp_list]))
             # temp_array=np.array([float(i) for i in temp_list])
-            print("       └{0:>5} | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
+            print("       └ {0:<5}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:<6.3f}"
                   .format(df[df['pmg_site']==A2]['atom_label'].iloc[0],
                           temp_array[0],temp_array[1],temp_array[2], A2_tuple[1] ))
