@@ -1,6 +1,6 @@
 """
 ## Command:
-python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get coordinates]
+python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get line_number]
 
 [POSCAR_filename]:
     POSCAR file that the user want to get coordinates
@@ -10,6 +10,8 @@ python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get coor
 """
 import sys
 import numpy as np
+
+sys.argv=['test','CONTCAR','Si1', 'O1', 'H1']
 
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
@@ -68,14 +70,23 @@ if len(atom_list)==0:
 ########## Printing
 ##############################################################################
 
-print("   Atom label |     x       y       z   ")
-print("   ───────────┼─────────────────────────")
+# print("   Atom label |     x       y       z   ")
+# print("   ───────────┼─────────────────────────")
 # list of (3,) numpy arrays
-coordinate_list=[]
+# for atom_label in atom_list:
+#     temp_list = lines[index_dict[atom_label]].split()
+#     #coordinate_list.append(np.array([float(i) for i in temp_list]))
+#     temp_array=np.array([float(i) for i in temp_list[0:3]])
+#     print("   {0:>10} | {1: 5.4f} {2: 5.4f} {3: 5.4f} ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+
+
+print("   Atom label | Line # |     x       y       z   ")
+print("   ───────────┼────────┼─────────────────────────")
+# list of (3,) numpy arrays
 for atom_label in atom_list:
     temp_list = lines[index_dict[atom_label]].split()
     #coordinate_list.append(np.array([float(i) for i in temp_list]))
     temp_array=np.array([float(i) for i in temp_list[0:3]])
-    print("   {0:>10} | {1: 5.4f} {2: 5.4f} {3: 5.4f} ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
-
+    print("   {0:>10} | {1:>5}  ".format(atom_label,index_dict[atom_label]+flag_selective) +
+          "| {0: 5.4f} {1: 5.4f} {2: 5.4f} ".format(temp_array[0],temp_array[1],temp_array[2]))
 
