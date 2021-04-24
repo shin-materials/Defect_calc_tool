@@ -46,13 +46,14 @@ $ python neighbors.py
 
 * perturb.py
 	* randomly perturb the atom positions around specific atom or position.
-	* (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 3.5 angstrom.
+	* (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 3.5 angstrom, which typically covers up to second nearest neighbors
 	* Instead of atom label, coordinates can be given like followings:
 		* 0.1,0.1,0.1
 		* (0.1,0.1,0.1)
 		* [0.1,0.1,0.1]
-		
+
 ```
+$ python perturb.py POSCAR Si1 r=3
    Atom label |     x       y       z    | Distance
    ───────────┼──────────────────────────┼──────────
     Before    | Space group: P3_221      |
@@ -68,6 +69,8 @@ $ python neighbors.py
       └ O1    |  0.4133  0.2435  0.8056  |  1.5874
       └ O6    |  0.5820  0.8333  0.8793  |  1.6462
       └ O2    |  0.7553  0.1583  0.4590  |  1.6429
+
+  Perturbed structure was written as PERTURBED_POSCAR
 ```
 
 * compare_POSCAR.py
