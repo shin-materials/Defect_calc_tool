@@ -8,6 +8,7 @@ While some scripts are coded only with standard python packages (like *numpy, pa
 ## List of scripts
 The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-quartz). In total 9 atoms (3 silicon atoms and 6 oxygen atoms) are included, which are labeld as Si1, Si2, Si3, O1, O2, O3, O4, O5, and O6.
 
+
 * coordinate.py
 	* get the line number in POSCAR and coordinates of atoms.
 
@@ -18,6 +19,7 @@ $ python coordinate.py POSCAR Si1 O1
           Si1 |     8  |  0.4782  0.0000  0.6667
            O1 |    11  |  0.4178  0.2526  0.7987
 ```
+
 
 * neighbors.py
 	* get the neighboring atoms of each atom given as arguments
@@ -43,6 +45,7 @@ $ python neighbors.py
       └ O1    |  0.4178  0.2526  0.7987  |  2.050
       └ O4    |  0.2526  0.4178  0.2013  |  1.967
 ```
+
 
 * perturb.py
 	* randomly perturb the atom positions around specific atom or position.
@@ -72,6 +75,7 @@ $ python perturb.py POSCAR Si1 r=3
 
   Perturbed structure was written as PERTURBED_POSCAR
 ```
+
 
 * compare_POSCAR.py
 	* Compare two POSCAR files with equivalent lattice but different atomic sites. This script will be effective when you compare two structures relaxed with different charge states.
