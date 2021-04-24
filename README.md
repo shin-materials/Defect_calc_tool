@@ -9,7 +9,7 @@ While some scripts are coded only with standard python packages (like *numpy, pa
 The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-quartz). In total 9 atoms (3 silicon atoms and 6 oxygen atoms) are included, which are labeld as Si1, Si2, Si3, O1, O2, O3, O4, O5, and O6.
 
 
-* coordinate.py
+#### coordinate.py
 	* get the line number in POSCAR and coordinates of atoms.
 
 ```
