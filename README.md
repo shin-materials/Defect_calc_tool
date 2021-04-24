@@ -10,13 +10,13 @@ The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-qua
 
 * coordinate.py: get the line number in POSCAR and coordinates of atoms.
 
-'''
+```
 $ python coordinate.py POSCAR Si1 O1
    Atom label | Line # |     x       y       z
    ───────────┼────────┼─────────────────────────
           Si1 |     8  |  0.4782  0.0000  0.6667
            O1 |    11  |  0.4178  0.2526  0.7987
-'''
+```
 
 * compare_POSCAR.py
 * neighbors.py
