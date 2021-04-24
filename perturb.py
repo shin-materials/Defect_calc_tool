@@ -18,8 +18,8 @@ from pymatgen.core import Structure, Element
 import pandas as pd
 #from pymatgen.util.coord import pbc_shortest_vectors
 
-#sys.argv=['test','CONTCAR','0.1,0.1,0.1','r=3.5']
-sys.argv=['test','CONTCAR','Si1','r=3.5']
+sys.argv=['test','POSCAR','Si1','r=3']
+#sys.argv=['test','CONTCAR','Si1','r=3.5']
 #print(sys.argv[0])
 
 radius=None
@@ -105,7 +105,7 @@ if len(atom_list)==0:
 
 struct = Structure.from_file(sys.argv[1])
 
-original_SG = struct.get_space_group_info()[0]
+original_SG = struct.get_space_group_info(symprec=1e-2,angle_tolerance=0.1)[0]
 df=create_df(struct)
 
 lattice_vector = np.array([struct.lattice.a,struct.lattice.b,struct.lattice.c])
@@ -165,6 +165,7 @@ if atom_list[0][0].isalpha():
         # perturbation: diaplace by 0.1 \AA for atoms 1.0 \AA apart from the position
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
+        struct.sites[df[df['atom_label']==A2_label]['site_index'].iloc[0]].frac_coords=temp_array
         print_list.append("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
                       .format(A2_label,
                               temp_array[0],temp_array[1],temp_array[2], A1.distance(A2) ))
@@ -185,6 +186,7 @@ else:
         random_vector=0.1/A2.distance_from_point(position_array*lattice_vector)*random_vector/np.linalg.norm(random_vector)
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
+        struct.sites[df[df['atom_label']==A2_label]['site_index'].iloc[0]].frac_coords=temp_array
         new_distance = (struct.get_sites_in_sphere(position_array,r=radius))[i][1]
         print_list.append("      └ {0:<6}| {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  {4:6.4f}"
               .format(A2_label, temp_array[0], temp_array[1], temp_array[2],
@@ -194,7 +196,7 @@ else:
         #               new_distance))
         
 
-new_SG = struct.get_space_group_info()[0]
+new_SG = struct.get_space_group_info(symprec=1e-2,angle_tolerance=0.1)[0]
 print("   ───────────┼──────────────────────────┼──────────")
 print("    After     | Space group: {0:<8}    |".format(new_SG))
 A1=df[df['atom_label']==atom_label]['pmg_site'].iloc[0]

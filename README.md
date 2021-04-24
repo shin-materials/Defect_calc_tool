@@ -19,10 +19,61 @@ $ python coordinate.py POSCAR Si1 O1
            O1 |    11  |  0.4178  0.2526  0.7987
 ```
 
-* compare_POSCAR.py
-
-
 * neighbors.py
+	* get the neighboring atoms of each atom given as arguments
+	* (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 2.5 angstrom.
+	* Instead of atom label, coordinates can be given like followings:
+		* 0.1,0.1,0.1
+		* (0.1,0.1,0.1)
+		* [0.1,0.1,0.1]
+
+```
+$ python neighbors.py
+   Atom label |     x       y       z    | Distance
+  ────────────┼──────────────────────────┼──────────
+     Si1      |  0.4782  0.0000  0.6667  |  -----
+      └ O5    |  0.1652  0.7474  0.5346  |  1.596
+      └ O1    |  0.4178  0.2526  0.7987  |  1.596
+      └ O6    |  0.5822  0.8348  0.8679  |  1.599
+      └ O2    |  0.7474  0.1652  0.4654  |  1.599
+     coords   |  0.1000  0.1000  0.1000  |  -----
+      └ O6    |  0.5822  0.8348  0.8679  |  2.104
+      └ O3    |  0.8348  0.5822  0.1321  |  1.995
+      └ Si3   |  0.5218  0.5218  0.0000  |  2.452
+      └ O1    |  0.4178  0.2526  0.7987  |  2.050
+      └ O4    |  0.2526  0.4178  0.2013  |  1.967
+```
+
 * perturb.py
+	* randomly perturb the atom positions around specific atom or position.
+	* (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 3.5 angstrom.
+	* Instead of atom label, coordinates can be given like followings:
+		* 0.1,0.1,0.1
+		* (0.1,0.1,0.1)
+		* [0.1,0.1,0.1]
+		
+```
+   Atom label |     x       y       z    | Distance
+   ───────────┼──────────────────────────┼──────────
+    Before    | Space group: P3_221      |
+     Si1      |  0.4782  0.0000  0.6667  |  ------
+      └ O5    |  0.1652  0.7474  0.5346  |  1.5961
+      └ O1    |  0.4178  0.2526  0.7987  |  1.5961
+      └ O6    |  0.5822  0.8348  0.8679  |  1.5987
+      └ O2    |  0.7474  0.1652  0.4654  |  1.5987
+   ───────────┼──────────────────────────┼──────────
+    After     | Space group: P1          |
+     Si1      |  0.4782  0.0000  0.6667  |  ------
+      └ O5    |  0.1545  0.7532  0.5316  |  1.6271
+      └ O1    |  0.4133  0.2435  0.8056  |  1.5874
+      └ O6    |  0.5820  0.8333  0.8793  |  1.6462
+      └ O2    |  0.7553  0.1583  0.4590  |  1.6429
+```
+
+* compare_POSCAR.py
+	* 
+
+
+
 * selective_dynamics.py
 * defect_creation.py

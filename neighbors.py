@@ -20,7 +20,7 @@ from pymatgen.core import Structure
 import pandas as pd
 import re
 
-sys.argv=['test','CONTCAR','[0.1,0.1,0.1]','Si1','Si2','O1','r=2']
+#sys.argv=['test','CONTCAR','[0.1,0.1,0.1]','Si1','Si2','O1','r=2']
 # sys.argv=['test','CONTCAR','Si1','0.2,0.1,', '0.1','Si1','Si2','O1','r=2']
 #print(sys.argv[0])
 
