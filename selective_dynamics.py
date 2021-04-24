@@ -39,13 +39,13 @@ for i, element in enumerate(element_list):
 ##############################################################################
 ########## Ask user for tag and atoms to apply
 ##############################################################################
-print('For which atoms do you want to apply this tag?')
-print("Separate with spaces: ex) 'Si1 Si2 O1 O3'")
-print("For all atoms, write 'All' ")
+print('   For which atoms do you want to apply this tag?')
+print("   Separate with spaces: ex) 'Si1 Si2 O1 O3'")
+print("   For all atoms, write 'All' ")
 atom_input=input()
 
-print('Which tag do you want to apply for selective dynamics?')
-print('ex) TTT, FFF, FFT')
+print('   Which tag do you want to apply for selective dynamics?')
+print('   ex) TTT, FFF, FFT')
 SD_tag=input()
 
 if atom_input == 'All':
@@ -121,6 +121,6 @@ else:
 
   
 print("")  
-print("POSCAR is written with this filename: {0}".format(out_filename))
+print("   POSCAR is written with this filename: {0}".format(out_filename))
 
 
