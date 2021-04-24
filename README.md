@@ -130,5 +130,3 @@ TTT
 
    POSCAR is written with this filename: SelDy_TTT_Si1.vasp
 ```
-
-### defect_creation.py
