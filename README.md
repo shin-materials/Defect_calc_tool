@@ -74,8 +74,20 @@ $ python perturb.py POSCAR Si1 r=3
 ```
 
 * compare_POSCAR.py
-	* 
+	* Compare two POSCAR files with equivalent lattice but different atomic sites. This script will be effective when you compare two structures relaxed with different charge states.
+	* The atoms are printed in order of larger to smaller displacements.
+	* (optional): *t = XX* will show you atoms displaced more than *XX* angstrom. Default *XX* value is 0.01.
 
+```
+$ python compare_POSCAR.py POSCAR PERTURBED_POSCAR t=0.01
+              | Thres.= 0.01 | POSCAR                   | .\PERTURBED_POSCAR       |
+   Atom label | Displ. (Ang) |     x       y       z    |     x       y       z    |
+   ───────────┼──────────────┼──────────────────────────┼──────────────────────────┤
+           O5 |    0.0738    |  0.1652  0.7474  0.5346  |  0.1545  0.7532  0.5316  |
+           O2 |    0.0725    |  0.7474  0.1652  0.4654  |  0.7553  0.1583  0.4590  |
+           O6 |    0.0625    |  0.5822  0.8348  0.8679  |  0.5820  0.8333  0.8793  |
+           O1 |    0.0540    |  0.4178  0.2526  0.7987  |  0.4133  0.2435  0.8056  |
+```
 
 
 * selective_dynamics.py

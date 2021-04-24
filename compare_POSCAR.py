@@ -105,7 +105,7 @@ df.insert(2, "Displ", displacement_list, True)
 # sort
 df=df.sort_values(by=['Displ'],ascending=False)
 # cut by threshold
-df=df[df['Displ']>=threshold]
+df=df[df['Displ']>threshold]
 
 ##############################################################################
 ########## Printing
