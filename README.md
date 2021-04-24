@@ -9,7 +9,7 @@ While some scripts are coded only with standard python packages (like *numpy, pa
 The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-quartz). In total 9 atoms (3 silicon atoms and 6 oxygen atoms) are included, which are labeld as Si1, Si2, Si3, O1, O2, O3, O4, O5, and O6.
 
 
-### coordinate.py
+### coordinate.py \[POSCAR\] \[Atom1\] \[Atom2\]
 * get the line number in POSCAR and coordinates of atoms.
 
 ```
@@ -30,7 +30,7 @@ $ python coordinate.py POSCAR Si1 O1
 	* [0.1,0.1,0.1]
 
 ```
-$ python neighbors.py
+$ python neighbors.py Si1 0.1,0.1,0.1
    Atom label |     x       y       z    | Distance
   ────────────┼──────────────────────────┼──────────
      Si1      |  0.4782  0.0000  0.6667  |  -----
