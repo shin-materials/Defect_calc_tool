@@ -11,7 +11,7 @@ python selective_dynamics.py [POSCAR_filename] [optional:atom labels to get line
 import sys
 import numpy as np
 
-sys.argv=['test','CONTCAR','Si1', 'O1', 'H1']
+#sys.argv=['test','CONTCAR','Si1', 'O1', 'H1']
 
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
