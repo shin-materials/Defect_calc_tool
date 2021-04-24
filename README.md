@@ -9,7 +9,7 @@ While some scripts are coded only with standard python packages (like *numpy, pa
 The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-quartz). In total 9 atoms (3 silicon atoms and 6 oxygen atoms) are included, which are labeld as Si1, Si2, Si3, O1, O2, O3, O4, O5, and O6.
 
 
-### coordinate.py \[POSCAR\] \[Atom1\] \[Atom2\]
+### coordinate.py \[POSCAR\] \[Atom1\] \[Atom2\] 
 * get the line number in POSCAR and coordinates of atoms.
 
 ```
@@ -21,7 +21,7 @@ $ python coordinate.py POSCAR Si1 O1
 ```
 
 
-### neighbors.py
+### neighbors.py \[POSCAR\] \[Atom1 or coords\] \[Atom2 or coords\]
 * get the neighboring atoms of each atom given as arguments
 * (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 2.5 angstrom.
 * Instead of atom label, coordinates can be given like followings:
@@ -47,7 +47,7 @@ $ python neighbors.py Si1 0.1,0.1,0.1
 ```
 
 
-### perturb.py
+### perturb.py \[POSCAR\] \[Atom or coords\] \[r=XX\]
 * randomly perturb the atom positions around specific atom or position.
 * (optional): *r = XX* will show you atoms with radius of *XX*. Default *XX* is 3.5 angstrom, which typically covers up to second nearest neighbors
 * Instead of atom label, coordinates can be given like followings:
@@ -77,7 +77,7 @@ $ python perturb.py POSCAR Si1 r=3
 ```
 
 
-### compare_POSCAR.py
+### compare_POSCAR.py \[POSCAR1\] \[POSCAR2\] \[r=0.01\]
 * Compare two POSCAR files with equivalent lattice but different atomic sites. This script will be effective when you compare two structures relaxed with different charge states.
 * The atoms are printed in order of larger to smaller displacements.
 * (optional): *t = XX* will show you atoms displaced more than *XX* angstrom. Default *XX* value is 0.01.
@@ -94,5 +94,5 @@ $ python compare_POSCAR.py POSCAR PERTURBED_POSCAR t=0.01
 ```
 
 
-### selective_dynamics.py
+### selective_dynamics.py \[POSCAR\]
 ### defect_creation.py
