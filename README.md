@@ -16,8 +16,8 @@ The description of each script assumes POSCAR file of SiO<sub>2</sub> (alpha-qua
 $ python coordinate.py POSCAR Si1 O1
    Atom label | Line # |     x       y       z
    ───────────┼────────┼─────────────────────────
-          Si1 |     8  |  0.4782  0.0000  0.6667
-           O1 |    11  |  0.4178  0.2526  0.7987
+          Si1 |     9  |  0.4782  0.0000  0.6667
+           O1 |    12  |  0.4178  0.2526  0.7987
 ```
 
 
