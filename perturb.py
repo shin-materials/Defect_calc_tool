@@ -161,7 +161,7 @@ if atom_list[0][0].isalpha():
         # random numbers
         random_vector=np.random.ranf([3,])-0.5
         # coordination dimention is (,3)
-        random_vector=min(0.11,0.1/A1.distance(A2))*random_vector/np.linalg.norm(random_vector)
+        random_vector=0.1/A1.distance(A2)*random_vector/np.linalg.norm(random_vector)
         # perturbation: diaplace by 0.1 \AA for atoms 1.0 \AA apart from the position
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
@@ -183,7 +183,7 @@ else:
         A2_label=df[df['pmg_site']==A2]['atom_label'].iloc[0]
         random_vector=np.random.ranf([3,])-0.5
         # coordination dimention is (,3)
-        random_vector=min(0.11,0.1/A2.distance_from_point(position_array*lattice_vector))*random_vector/np.linalg.norm(random_vector)
+        random_vector=0.1/A2.distance_from_point(position_array*lattice_vector)*random_vector/np.linalg.norm(random_vector)
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
         struct.sites[df[df['atom_label']==A2_label]['site_index'].iloc[0]].frac_coords=temp_array
