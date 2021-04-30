@@ -18,7 +18,7 @@ from pymatgen.core import Structure, Element
 import pandas as pd
 #from pymatgen.util.coord import pbc_shortest_vectors
 
-sys.argv=['test','POSCAR','Si1','r=3']
+#sys.argv=['test','PERTURBED_initial_H-.vasp','0,0,0','r=3']
 #sys.argv=['test','CONTCAR','Si1','r=3.5']
 #print(sys.argv[0])
 
@@ -153,7 +153,7 @@ print_list=[]
 # If label is atom label like 'Si1'
 if atom_list[0][0].isalpha():
     A1_label=atom_list[0]
-    A1=df[df['atom_label']=='Si1']['pmg_site'].iloc[0]
+    A1=df[df['atom_label']==A1_label]['pmg_site'].iloc[0]
     neighbors=struct.get_neighbors(A1,r=radius)
     for A2 in neighbors:
         A2.to_unit_cell(in_place=True)
@@ -161,7 +161,8 @@ if atom_list[0][0].isalpha():
         # random numbers
         random_vector=np.random.ranf([3,])-0.5
         # coordination dimention is (,3)
-        random_vector=0.1/A1.distance(A2)*random_vector/np.linalg.norm(random_vector)
+        scaling_factor = min(0.1,0.1/A1.distance(A2) )
+        random_vector = scaling_factor*random_vector/np.linalg.norm(random_vector)
         # perturbation: diaplace by 0.1 \AA for atoms 1.0 \AA apart from the position
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
@@ -175,7 +176,6 @@ if atom_list[0][0].isalpha():
 # If entry is coordinate
 else:        
     position_array=np.array(eval(atom_label))
-    print("     coords   | {0: 5.4f} {1: 5.4f} {2: 5.4f}  |  ------ ".format(position_array[0],position_array[1],position_array[2]))
     neighbors=struct.get_sites_in_sphere(position_array,r=radius)
     for i, A2_tuple in enumerate(neighbors):
         A2=A2_tuple[0]
@@ -183,7 +183,10 @@ else:
         A2_label=df[df['pmg_site']==A2]['atom_label'].iloc[0]
         random_vector=np.random.ranf([3,])-0.5
         # coordination dimention is (,3)
-        random_vector=0.1/A2.distance_from_point(position_array*lattice_vector)*random_vector/np.linalg.norm(random_vector)
+        # scaling factor forces it to be less than 0.1 ang.
+        # + 0.001 is to prevent division by zero
+        scaling_factor=min(0.1, 0.1/(0.001 + A2.distance_from_point(position_array*lattice_vector)))
+        random_vector = scaling_factor * random_vector/np.linalg.norm(random_vector)
         A2.frac_coords = A2.frac_coords + random_vector/lattice_vector
         temp_array=A2.frac_coords
         struct.sites[df[df['atom_label']==A2_label]['site_index'].iloc[0]].frac_coords=temp_array
@@ -199,9 +202,13 @@ else:
 new_SG = struct.get_space_group_info(symprec=1e-2,angle_tolerance=0.1)[0]
 print("   ───────────┼──────────────────────────┼──────────")
 print("    After     | Space group: {0:<8}    |".format(new_SG))
-A1=df[df['atom_label']==atom_label]['pmg_site'].iloc[0]
-temp_array=A1.frac_coords
-print("   {0:>5}      | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  ------ ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+
+if atom_list[0][0].isalpha():
+    A1=df[df['atom_label']==atom_label]['pmg_site'].iloc[0]
+    temp_array=A1.frac_coords
+    print("   {0:>5}      | {1: 5.4f} {2: 5.4f} {3: 5.4f}  |  ------ ".format(atom_label,temp_array[0],temp_array[1],temp_array[2]))
+else:
+    print("     coords   | {0: 5.4f} {1: 5.4f} {2: 5.4f}  |  ------ ".format(position_array[0],position_array[1],position_array[2]))
 for i in print_list:
     print(i)
     
