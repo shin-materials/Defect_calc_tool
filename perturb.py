@@ -225,7 +225,11 @@ species_list=struct.species
 # Remove repeated entry in the element list
 reduced_species=[str(i) for n, i in enumerate(species_list) if i not in species_list[:n]]
 
-filename = 'PERTURBED_'+sys.argv[1]
+if sys.argv[1][-5::]=='.vasp':
+    filename = sys.argv[1][:-5]+'_PERTURBED'+sys.argv[1][-5::]
+else:
+    filename = sys.argv[1]+'_PERTURBED'
+    
 out_file=open(filename,'w')
 out_file.write("Perturbed POSCAR file from {0}\n".format(sys.argv[1])) #first comment line
 out_file.write("1.0\n") # scale 
