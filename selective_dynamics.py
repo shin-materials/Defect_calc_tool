@@ -77,7 +77,7 @@ if flag_selective == 0:
 # Write Direct or Cartesian
 out_file.write(lines[7+flag_selective])
 
-for i in range(8+flag_selective,max(index_dict.values())):
+for i in range(8+flag_selective,(1-flag_selective)+max(index_dict.values())):
     for j in (lines[i].split())[0:3]:
             out_file.write('  '+j)
             
