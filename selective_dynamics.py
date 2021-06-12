@@ -6,6 +6,7 @@
 import sys
 import numpy as np
 
+sys.argv=['test','CONTCAR.i.0.IS.2.IB.1.vasp']
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
 ##############################################################################
@@ -77,12 +78,12 @@ if flag_selective == 0:
 # Write Direct or Cartesian
 out_file.write(lines[7+flag_selective])
 
-for i in range(8+flag_selective,(1-flag_selective)+max(index_dict.values())):
+for i in range(8+flag_selective,1+max(index_dict.values())):
     for j in (lines[i].split())[0:3]:
             out_file.write('  '+j)
             
     #out_file.write('  ')
-    if i in apply_index_list or atom_input=='All' or atom_input=='all':
+    if i in apply_index_list or atom_input=='All' or atom_input=='all' or atom_input=="ALL":
         # for j in (lines[i].split)[0:3]:
         #     out_file.write('  '+j)
         out_file.write('   {0}   {1}   {2}'.format(SD_tag[0],SD_tag[1],SD_tag[2]))
