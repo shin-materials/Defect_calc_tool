@@ -6,7 +6,7 @@
 import sys
 import numpy as np
 
-sys.argv=['test','CONTCAR.i.0.IS.2.IB.1.vasp']
+#sys.argv=['test','CONTCAR.i.0.IS.2.IB.1.vasp']
 ##############################################################################
 ########## Read POSCAR file and indexing each line with atom label
 ##############################################################################
@@ -79,6 +79,11 @@ if flag_selective == 0:
 out_file.write(lines[7+flag_selective])
 
 for i in range(8+flag_selective,1+max(index_dict.values())):
+    ## if input poscar is without Selective dynamics line,
+    # starts with line number 9 (index number 8)
+    ## if poscar has Selective dynamics line,
+    # starts with line 10 (index number 9)
+    ## +1 in the range part is to cover the last item.
     for j in (lines[i].split())[0:3]:
             out_file.write('  '+j)
             
